@@ -32,3 +32,12 @@
 - openweathermap.org — API погоды (Current weather data, 5 day / 3 hour forecast)
 - https://geocode-maps.yandex.ru — API Яндекс.Карты для определения координат по имени местности (Города, улицы и т.д.)
 - pyTelegramBotApi — библиотека telebot.
+
+## Составляющие:
+- CurrentWeatherAction class
+- WeatherForecastAction class
+- /start and /help func
+- Geocoder module
+- Weather module
+- font module
+= keyboard module
