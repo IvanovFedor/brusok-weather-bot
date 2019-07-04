@@ -1,0 +1,5 @@
+#.idea folder
+.idea/
+
+#Apikeys db
+apikeys.json
