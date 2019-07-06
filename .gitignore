@@ -1,0 +1,6 @@
+#.idea folder
+.idea/
+venv/
+
+#Apikeys db
+apikeys.json
