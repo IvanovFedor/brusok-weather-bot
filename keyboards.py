@@ -8,3 +8,10 @@ main.row('Помощь \U00002753')
 
 error_keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
 error_keyboard.row('Задать город \U0001F4CD', 'Назад \U0001F519')
+main.row('Погода', 'Прогноз')
+main.row('Помощь')
+
+
+error = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+error.row('Задать город', 'Назад')
+
