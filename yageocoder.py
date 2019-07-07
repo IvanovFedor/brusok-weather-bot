@@ -25,9 +25,10 @@ class GeoCoder:
             coordinates = [float(i) for i in position.split()]
             current_location = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty'][
                 'GeocoderMetaData']['text']
-            result = {'lon': coordinates[1], 'lat': coordinates[0], 'location': current_location}
+            result = {'flag': True, 'lon': coordinates[1], 'lat': coordinates[0], 'location': current_location}
             return result
         else:
-            return False
+            result = {'flag': False}
+            return result
 
 
