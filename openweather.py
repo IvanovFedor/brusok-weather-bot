@@ -1,9 +1,7 @@
 import requests as req
 from datetime import datetime
 
-CONST_URL = 'http://api.openweathermap.org/data/2.5'
-METHOD_WEATHER = '/weather'
-METHOD_FORECAST = '/forecast'
+CONST_URL = 'http://api.openweathermap.org/data/2.5/{method}'
 
 
 class OpenWeather:
@@ -12,12 +10,12 @@ class OpenWeather:
         self.apikey = apikey
 
     def weather(self, lat, lon, units='metric', lang='ru'):
-        res = req.get(self.url + METHOD_WEATHER, params={'appid': self.apikey, 'lat': lat,
+        res = req.get(self.url.format(method='weather'), params={'appid': self.apikey, 'lat': lat,
                                                      'lon': lon, 'units': units, 'lang': lang})
         return res.json()
 
     def forecast(self, lat, lon, count=40, units='metric', lang='ru'):
-        res = req.get(self.url + METHOD_FORECAST, params={'appid': self.apikey, 'lat': lat,
+        res = req.get(self.url.format(method='forecast'), params={'appid': self.apikey, 'lat': lat,
                                                           'lon': lon, 'cnt': count,
                                                           'units': units, 'lang': lang})
         return res.json()
