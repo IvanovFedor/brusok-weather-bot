@@ -1,6 +1,7 @@
 #.idea folder
 .idea/
 venv/
+__pycache__/
 
 #Apikeys db
 apikeys.json
