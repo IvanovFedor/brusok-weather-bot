@@ -11,7 +11,8 @@ class GeoCoder:
     def is_exist(self, place):
         res = req.get(self.url, params={'apikey': self.apikey,'geocode': place, 'format': 'json'}).json()
         if res['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'] == '0':
-            return False
+            answer = {'existence': False}
+            return answer
         else:
             answer = {'existence': True, 'object': res}
             return answer
