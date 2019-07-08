@@ -18,9 +18,9 @@ templates = {'info': '''
 
 bot = telebot.TeleBot(apikeys['TeleBot'])
 
-# @bot.message_handler(content_types=['text'])
-# # def weather_action(msg):
-# #     msg = bot.send_message(msg.from_user.id, templates[''])
+cmds = {'weather': 'Погода \U000026C5',
+        'forecast': 'Прогноз \U0001F4C5',
+        'help': 'Помощь \U00002753'}
 
 
 @bot.message_handler(commands=['start', 'help'])
@@ -29,4 +29,16 @@ def info_action(msg):
                      reply_markup=markups.main, parse_mode='MarkDown')
 
 
+@bot.message_handler(func=lambda msg: msg.text == cmds['weather'])
+def weather_action(msg):
+    msg = bot.send_message(msg.from_user.id, templates['geoPosition'])
+    bot.register_next_step_handler(msg, geo_position_action)
+
+
+def geo_position_action(msg):
+    bot.send_message(msg.from_user.id, templates['weather'])
+
+
+bot.enable_save_next_step_handlers(delay=2)
+bot.load_next_step_handlers()
 bot.polling(none_stop=True)
