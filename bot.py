@@ -31,12 +31,12 @@ def info_action(msg):
 
 @bot.message_handler(func=lambda msg: msg.text == cmds['weather'])
 def weather_action(msg):
-    msg = bot.send_message(msg.from_user.id, templates['geoPosition'])
+    msg = bot.send_message(msg.from_user.id, templates['geoPosition'], reply_markup=markups.main_remove)
     bot.register_next_step_handler(msg, geo_position_action)
 
 
 def geo_position_action(msg):
-    bot.send_message(msg.from_user.id, templates['weather'])
+    bot.send_message(msg.from_user.id, templates['weather'], reply_markup=markups.main)
 
 
 bot.enable_save_next_step_handlers(delay=2)
