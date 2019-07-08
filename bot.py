@@ -12,9 +12,15 @@ templates = {'info': '''
 *Прогноз* \U0001F4C5 на следующие 3 дня
 *Помощь* \U00002753
                      ''',
-             'weather': ''''''}
+             'geoPosition': '''Шаг с геопозицией''',
+             'weather': '''Типо погода''',
+             'forecast': '''Типо прогноз'''}
 
 bot = telebot.TeleBot(apikeys['TeleBot'])
+
+# @bot.message_handler(content_types=['text'])
+# # def weather_action(msg):
+# #     msg = bot.send_message(msg.from_user.id, templates[''])
 
 
 @bot.message_handler(commands=['start', 'help'])
