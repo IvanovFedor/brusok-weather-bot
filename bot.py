@@ -31,7 +31,7 @@ def info_action(msg):
 
 @bot.message_handler(func=lambda msg: msg.text == cmds['weather'])
 def weather_action(msg):
-    msg = bot.send_message(msg.from_user.id, templates['geoPosition'], reply_markup=markups.main_remove)
+    msg = bot.send_message(msg.from_user.id, templates['geoPosition'], reply_markup=markups.remove)
     bot.register_next_step_handler(msg, geo_position_action)
 
 
