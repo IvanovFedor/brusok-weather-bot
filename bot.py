@@ -38,8 +38,8 @@ def weather_end(msg):
     res = w.weather(geocode['lon'], geocode['lat'])
 
     text = templates['weather'].format(
-        place=geocode['location'], weather=res['weather'][0]['main'],
-        temp=res['main']['temp'], min_temp=res['main']['temp_min'] ,
+        place=geocode['location'], weather=res['weather'][0]['description'],
+        temp=res['main']['temp'], min_temp=res['main']['temp_min'],
         max_temp=res['main']['temp_max'], wind=res['wind']['speed'],
         clouds=res['clouds']['all'])
 
