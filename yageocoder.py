@@ -22,10 +22,10 @@ class GeoCoder:
         if answer['existence']:
             res = answer['object']
             position = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
-            coordinates = [float(i) for i in position.split()]
+            lon, lat = [float(i) for i in position.split()]
             current_location = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty'][
                 'GeocoderMetaData']['text']
-            result = {'flag': True, 'lon': coordinates[1], 'lat': coordinates[0], 'location': current_location}
+            result = {'flag': True, 'lon': lon, 'lat': lat, 'location': current_location}
             return result
         else:
             result = {'flag': False}
