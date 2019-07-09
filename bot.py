@@ -30,7 +30,7 @@ def weather_end(msg):
     g = yageocoder.GeoCoder(apikeys['YaGeoCoder'])
     geocode = g.get_coordinates(msg.text)
     if not geocode['flag']:
-        msg = bot.reply_to(msg, "Попробуйте еще раз",
+        msg = bot.reply_to(msg, templates['error'],
                            parse_mode='MarkDown')
         bot.register_next_step_handler(msg, weather_end)
         return
