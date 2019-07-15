@@ -8,27 +8,24 @@ class GeoCoder:
         self.apikey = apikey
         self.url = url
 
-    def is_exist(self, place):
-        res = req.get(self.url, params={'apikey': self.apikey,'geocode': place, 'format': 'json'}).json()
-        if res['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'] == '0':
-            answer = {'existence': False}
-            return answer
-        else:
-            answer = {'existence': True, 'object': res}
-            return answer
-
     def get_coordinates(self, place):
-        answer = self.is_exist(place)
-        if answer['existence']:
-            res = answer['object']
+        res = req.get(self.url, params=dict(apikey=self.apikey, geocode=place, format='json')).json()
+        if res['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'] == '0':
+            result = {'existence': False}
+            return result
+        else:
             position = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
             lon, lat = [float(i) for i in position.split()]
             current_location = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty'][
                 'GeocoderMetaData']['text']
-            result = {'flag': True, 'lon': lon, 'lat': lat, 'location': current_location}
-            return result
-        else:
-            result = {'flag': False}
+            result = {'existence': True, 'lon': lon, 'lat': lat, 'location': current_location}
             return result
 
+    def get_place(self, lat, lon):
+        res = req.get(self.url, params=dict(apikey=self.apikey, geocode=str(lat) + ', ' + str(lon), sco='latlong',
+                                            format='json')).json()
+        current_location = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty'][
+            'GeocoderMetaData']['text']
+        result = {'existence': True, 'location': current_location}
+        return result
 

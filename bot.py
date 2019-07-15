@@ -34,12 +34,22 @@ def weather_start(msg):
 
 def weather_end(msg):
     g = yageocoder.GeoCoder(apikeys['YaGeoCoder'])
-    geocode = g.get_coordinates(msg.text)
-    if not geocode['flag']:
+    if msg.content_type == 'text':
+        geocode = g.get_coordinates(msg.text)
+        if not geocode['existence']:
+            msg = bot.reply_to(msg, templates['error'],
+                               parse_mode='MarkDown')
+            bot.register_next_step_handler(msg, forecast_end)
+            return
+    elif msg.content_type == 'location':
+        geocode = g.get_place(msg.location.latitude, msg.location.longitude)
+        geocode['lat'], geocode['lon'] = msg.location.latitude, msg.location.longitude
+    else:
         msg = bot.reply_to(msg, templates['error'],
                            parse_mode='MarkDown')
-        bot.register_next_step_handler(msg, weather_end)
+        bot.register_next_step_handler(msg, forecast_end)
         return
+
     w = openweather.OpenWeather(apikeys['OpenWeather'])
     res = w.weather(geocode['lat'], geocode['lon'])
 
@@ -62,12 +72,22 @@ def forecast_start(msg):
 
 def forecast_end(msg):
     g = yageocoder.GeoCoder(apikeys['YaGeoCoder'])
-    geocode = g.get_coordinates(msg.text)
-    if not geocode['flag']:
+    if msg.content_type == 'text':
+        geocode = g.get_coordinates(msg.text)
+        if not geocode['existence']:
+            msg = bot.reply_to(msg, templates['error'],
+                               parse_mode='MarkDown')
+            bot.register_next_step_handler(msg, forecast_end)
+            return
+    elif msg.content_type == 'location':
+        geocode = g.get_place(msg.location.latitude, msg.location.longitude)
+        geocode['lat'], geocode['lon'] = msg.location.latitude, msg.location.longitude
+    else:
         msg = bot.reply_to(msg, templates['error'],
                            parse_mode='MarkDown')
         bot.register_next_step_handler(msg, forecast_end)
         return
+
     w = openweather.OpenWeather(apikeys['OpenWeather'])
     res = w.forecast_limited(geocode['lat'], geocode['lon'], 3)
 
@@ -78,6 +98,13 @@ def forecast_end(msg):
             temp=day['main']['temp'], wind=day['wind']['speed'], clouds=day['clouds']['all'])
 
     bot.reply_to(msg, text, parse_mode='MarkDown',
+                 reply_markup=markups.main)
+
+
+@bot.message_handler()
+def err(msg):
+    bot.reply_to(msg, "Извини, я тебя не понимаю! Воспользуйся"
+                      " клавиатурой или попробуй написать мне еще раз.",
                  reply_markup=markups.main)
 
 
