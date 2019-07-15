@@ -8,7 +8,6 @@ class GeoCoder:
         self.apikey = apikey
         self.url = url
 
-
     def get_coordinates(self, place):
         res = req.get(self.url, params=dict(apikey=self.apikey, geocode=place, format='json')).json()
         if res['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found'] == '0':
@@ -16,10 +15,10 @@ class GeoCoder:
             return result
         else:
             position = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
-            coordinates = [float(i) for i in position.split()]
+            lon, lat = [float(i) for i in position.split()]
             current_location = res['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['metaDataProperty'][
                 'GeocoderMetaData']['text']
-            result = {'existence': True, 'lon': coordinates[1], 'lat': coordinates[0], 'location': current_location}
+            result = {'existence': True, 'lon': lon, 'lat': lat, 'location': current_location}
             return result
 
     def get_place(self, lat, lon):
